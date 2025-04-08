@@ -1,12 +1,12 @@
 import React from "react";
 
-const Footer = () =>{
+const Footer = () => {
 
     return (
         <div>
-            <div>
-
-            </div>
+            <footer>
+                <p>© 2024 Online Mall. All rights reserved.</p>
+            </footer>
         </div>
     );
 }

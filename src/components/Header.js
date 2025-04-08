@@ -2,9 +2,9 @@ import React from "react";
 
 function Header() {
     return (
-        <div>
-            Header Area
-        </div>
+        <header>
+            <h1>Online Mall</h1>
+        </header>
     );
 }
 
