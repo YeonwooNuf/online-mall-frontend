@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 
 function Home() {
-    const products = [
-        { id: 1, name: "Laptop", price: 1200 },
-        { id: 2, name: "Phone", price: 800 },
-    ];
+    // const products = [
+    //     { id: 1, name: "Laptop", price: 1200 },
+    //     { id: 2, name: "Phone", price: 800 },
+    // ];
+
+    const [products, setProducts] = useState([]);
+    const [cartCount, setCartCount] = useState(0);
+
+    useEffect(() => {
+        // 예제: API 호출 대신 하드코딩 데이터 사용
+        const fetchProducts = () => {
+            const data = [
+                { id: 1, name: "Laptop", price: 1200},
+                { id: 2, name: "Phone", price: 800},
+                { id: 3, name: "Tablet", price: 400}
+            ];
+            setProducts(data);
+        };
+        fetchProducts();
+    },[]);  // 빈 배열로 마운트 시 한 번만 실행
+
+    function handleAddToCart() {
+        setCartCount(cartCount + 1);
+    }
 
     return (
         <div>
@@ -15,7 +35,11 @@ function Home() {
                     <ProductCard
                         key={product.id}
                         name={product.name}
-                        price={product.price} />))}
+                        price={product.price}
+                        onAddToCart={handleAddToCart}
+                    />
+                ))}
+
             </div>
         </div>
     );
