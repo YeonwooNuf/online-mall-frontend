@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import { fetchProducts } from "../services/productService";
 
-function Home() {
+const Home = () => {
     // const products = [
     //     { id: 1, name: "Laptop", price: 1200 },
     //     { id: 2, name: "Phone", price: 800 },
@@ -23,12 +24,29 @@ function Home() {
     //     fetchProducts();
     // },[]);  // 빈 배열로 마운트 시 한 번만 실행
 
+    // useEffect(() => {
+    //     // Spring Boot API에서 데이터 가져오기
+    //     fetch("http://localhost:8080/products")     // fetch 쓰면 기본적으로 GET 방식
+    //         .then(response => response.json())
+    //         .then(data => setProducts(data))
+    //         .catch(error => console.error("Error fetching products:", error));
+    // }, []);
+
+    // useEffect(() => {
+    //     const searchProducts = async() => {         // await(비동기 처리) 사용하려면 async 추가해줘야 함
+    //         const resp = await fetchProducts();
+    //         return resp;
+    //     }
+    //     const productsList = searchProducts();
+    //     setProducts(productsList);
+    // }, [])
+
     useEffect(() => {
-        // Spring Boot API에서 데이터 가져오기
-        fetch("http://localhost:8080/api/products")     // fetch 쓰면 기본적으로 GET 방식
-            .then(response => response.json())
-            .then(data => setProducts(data))
-            .catch(error => console.error("Error fetching products:", error));
+        const search = async () => {
+            const data = await fetchProducts();
+            setProducts(data);
+        }
+        search();
     }, []);
 
     function handleAddToCart() {
@@ -38,6 +56,7 @@ function Home() {
     return (
         <div>
             <h1>Welcome to Online Mall</h1>
+            <p>Cart Count: {cartCount}</p>
             <div className="product-list">
                 {products.map((product) => (
                     <ProductCard
@@ -47,7 +66,6 @@ function Home() {
                         onAddToCart={handleAddToCart}
                     />
                 ))}
-
             </div>
         </div>
     );
