@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
 import { fetchProducts } from "../services/productService";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../features/cartSlice";
 
 const Home = () => {
-    // const products = [
-    //     { id: 1, name: "Laptop", price: 1200 },
-    //     { id: 2, name: "Phone", price: 800 },
-    // ];
 
     const [products, setProducts] = useState([]);
     const [cartCount, setCartCount] = useState(0);
+
+    const dispatch = useDispatch();
 
     // useEffect(() => {
     //     // 예제: API 호출 대신 하드코딩 데이터 사용
@@ -49,8 +49,8 @@ const Home = () => {
         search();
     }, []);
 
-    function handleAddToCart() {
-        setCartCount(cartCount + 1);
+    function handleAddToCart(product) {
+        dispatch(addToCart(product));
     }
 
     return (
@@ -63,7 +63,9 @@ const Home = () => {
                         key={product.id}
                         name={product.name}
                         price={product.price}
-                        onAddToCart={handleAddToCart}
+                        onAddToCart={() => {
+                            handleAddToCart(product);
+                        }}
                     />
                 ))}
             </div>
