@@ -29,10 +29,16 @@ function UserForm() {
     }
 
     function handleSubmit(event) {
-        event.preventDefault(); // 기본 폼 제출 방지
+        event.preventDefault();
         if (validate()) {
-            console.log("Form Submitted", formData);
-            // 서버에 데이터 전송 로직 추가 가능
+            fetch("http://localhost:8080/users", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            })
+                .then((response) => response.text())
+                .then((message) => alert(message))
+                .catch((error) => console.error("Error:", error));
         }
     }
 
